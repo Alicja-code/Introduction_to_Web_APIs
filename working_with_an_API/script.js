@@ -1,18 +1,31 @@
 var request = new XMLHttpRequest();
 
-request.open('GET', 'https://hplussport.com/api/products?qty=2&order=name');
+request.open('GET', 'https://hplussport.com/api/products?order=name');
+// qty=2&
 
 request.onload = function() {
 	var response = request.response;
 	var parsedData = JSON.parse(response);
 	console.log(parsedData);
+
+	for(item in parsedData) {
+		var name = parsedData[item].name;
+		var products = document.createElement('li');
+		products.innerHTML = name;
+		document.body.appendChild(products);
+
+		var imageUrl = parsedData[item].image;
+		var images = document.createElement('img');
+		images.setAttribute('src', imageUrl);
+		document.body.appendChild(images);
+	}
+	
 	// var description = parsedData[0].description;
 	// console.log(description);
-	var name = parsedData[0].name;
-
-	var products = document.createElement('li');
-	products.innerHTML = name;
-	document.body.appendChild(products);
+	// var name = parsedData[0].name;
+	// var products = document.createElement('li');
+	// products.innerHTML = name;
+	// document.body.appendChild(products);
 }
 
 request.send();
